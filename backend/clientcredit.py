@@ -4,12 +4,15 @@ import base64
 from requests import post, get
 import json
 from azapi import AZlyrics
+from query import summarize_song
+from lyrics import get_lyrics
+from query import summarize_lyrics
 
 #access to authorized tokens
 load_dotenv()
 
-client_id = os.getenv("CLIENT_ID")
-client_secret= os.getenv("CLIENT_SECRET")
+client_id = os.getenv("CLIENT_ID_SPOT")
+client_secret= os.getenv("CLIENT_SECRET_SPOT")
 
 #function to get token to access spotify api
 def get_token():
@@ -116,6 +119,39 @@ def get_year_of_song(token, track):
     
     return json_result
 
+def get_summary_with_track_and_artist(token, track, artist):
+    url= "https://api.spotify.com/v1/search"
+    headers = get_auth_header(token)
+    #query = f"q={artist_name}&type=artist,track"
+    #limit 1 is the top artist
+    query = f"?q={track,artist}&type=track,artist&limit=1"
+
+    query_url=url +query
+    result = get(query_url, headers=headers)
+    #json_result = json.loads(result.content)
+    json_result = json.loads(result.content)["tracks"]["items"]
+    
+    if len(json_result) == 0:
+        print("No track with this name exists...")
+        return None
+    track_id = json_result[0]["id"]
+    url= f"https://api.spotify.com/v1/tracks/{track_id}"
+    headers = get_auth_header(token)
+    result = get(url, headers=headers)
+    
+    date = json.loads(result.content)['album']['release_date']
+    year = int(date[0:4])
+    if year < 2022:
+        summary = summarize_song(artist, track, date)
+        return summary
+    else:
+        lyrics = get_lyrics(artist, track)
+        return summarize_lyrics(lyrics)
+
+
+    
+    
+
 token = get_token()
 result = search_for_artist(token, "The Backseat Lov")
 result2 = search_for_track(token,"Firework")
@@ -123,8 +159,10 @@ track_id = result2["id"]
 artist_id = result["id"]
 
 songs = get_songs_by_artist(token, artist_id)
-print(get_year_of_track(token, track_id))
-print(get_year_of_song(token, "Firework"))
+# print(get_year_of_track(token, track_id))
+# print(get_year_of_song(token, "Firework"))
+print(get_summary_with_track_and_artist(token, "yes, and?", "Ariana Grande"))
+
 
 # for idx, song in enumerate(songs):
 #     print(f"{idx+1}. {song['name']}")
