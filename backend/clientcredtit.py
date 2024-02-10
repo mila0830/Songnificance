@@ -3,6 +3,7 @@ import os
 import base64
 from requests import post, get
 import json
+from azapi import AZlyrics
 
 #access to authorized tokens
 load_dotenv()
