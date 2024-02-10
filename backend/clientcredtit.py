@@ -11,6 +11,7 @@ load_dotenv()
 client_id = os.getenv("CLIENT_ID")
 client_secret= os.getenv("CLIENT_SECRET")
 
+#function to get token to access spotify api
 def get_token():
     auth_string = client_id + ":" + client_secret
     auth_bytes = auth_string.encode("utf-8")
@@ -28,9 +29,11 @@ def get_token():
     token=json_result["access_token"]
     return token
 
+#needed for the following functions
 def get_auth_header(token):
     return{"Authorization": "Bearer " + token}
 
+#function that gets all information on a top artist based on the artist name inputted
 def search_for_artist(token, artist_name):
     url= "https://api.spotify.com/v1/search"
     headers = get_auth_header(token)
@@ -48,26 +51,82 @@ def search_for_artist(token, artist_name):
         return None
     return json_result[0]
 
-#items contains all the different results
-
-
+#function that gets all the songs of a certain artist given their ID
 def get_songs_by_artist(token, artist_id):
     #want the top tracks of a specific artist -- need to have a country
     url= f"https://api.spotify.com/v1/artists/{artist_id}/top-tracks?country=US"
     headers = get_auth_header(token)
     result = get(url, headers=headers)
+    
     json_result = json.loads(result.content)["tracks"]
+    
+    return json_result
+
+#function that gets the information based on a track name given
+def search_for_track(token, track_name):
+    url= "https://api.spotify.com/v1/search"
+    headers = get_auth_header(token)
+    #query = f"q={artist_name}&type=artist,track"
+    #limit 1 is the top artist
+    query = f"?q={track_name}&type=track&limit=1"
+
+    query_url=url +query
+    result = get(query_url, headers=headers)
+    #json_result = json.loads(result.content)
+    json_result = json.loads(result.content)["tracks"]["items"]
+    
+    if len(json_result) == 0:
+        print("No track with this name exists...")
+        return None
+    return json_result[0]
+
+#function that gets the year of a certain track given its ID
+def get_year_of_track(token, track_id):
+    #want the top tracks of a specific artist -- need to have a country
+    url= f"https://api.spotify.com/v1/tracks/{track_id}"
+    headers = get_auth_header(token)
+    result = get(url, headers=headers)
+    
+    json_result = json.loads(result.content)['album']['release_date']
+    
+    return json_result
+
+#function that gets year of a certain song given any track name inputted
+def get_year_of_song(token, track):
+    url= "https://api.spotify.com/v1/search"
+    headers = get_auth_header(token)
+    #query = f"q={artist_name}&type=artist,track"
+    #limit 1 is the top artist
+    query = f"?q={track}&type=track&limit=1"
+
+    query_url=url +query
+    result = get(query_url, headers=headers)
+    #json_result = json.loads(result.content)
+    json_result = json.loads(result.content)["tracks"]["items"]
+    
+    if len(json_result) == 0:
+        print("No track with this name exists...")
+        return None
+    track_id = json_result[0]["id"]
+    url= f"https://api.spotify.com/v1/tracks/{track_id}"
+    headers = get_auth_header(token)
+    result = get(url, headers=headers)
+    
+    json_result = json.loads(result.content)['album']['release_date']
     
     return json_result
 
 token = get_token()
 result = search_for_artist(token, "The Backseat Lov")
+result2 = search_for_track(token,"Firework")
+track_id = result2["id"]
 artist_id = result["id"]
 
 songs = get_songs_by_artist(token, artist_id)
+print(get_year_of_track(token, track_id))
+print(get_year_of_song(token, "Firework"))
 
-
-for idx, song in enumerate(songs):
-    print(f"{idx+1}. {song['name']}")
+# for idx, song in enumerate(songs):
+#     print(f"{idx+1}. {song['name']}")
 
 
