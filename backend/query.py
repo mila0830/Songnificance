@@ -18,7 +18,7 @@ def summarize_song(artist, track, year):
     chat_completion = client.chat.completions.create(
         messages = [
             {"role": "user",
-            "content": f"What is the meaning of the song {track} by {artist}? in 3 sentenes"}
+            "content": f"What is the meaning of the song {track} by {artist} and why did they write it? in 3 sentenes"}
         ],
         model="gpt-3.5-turbo",
     )

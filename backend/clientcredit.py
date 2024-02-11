@@ -161,7 +161,7 @@ artist_id = result["id"]
 songs = get_songs_by_artist(token, artist_id)
 # print(get_year_of_track(token, track_id))
 # print(get_year_of_song(token, "Firework"))
-print(get_summary_with_track_and_artist(token, "yes, and?", "Ariana Grande"))
+#print(get_summary_with_track_and_artist(token, "yes, and?", "Ariana Grande"))
 
 
 # for idx, song in enumerate(songs):
