@@ -7,42 +7,59 @@ export default function useAuth(code){
 
     useEffect(() => {
         console.log('Code:', code);
-        axios
-          .post("http://localhost:3002/login", {
-            code,
-          })
-          .then(res => {
-            console.log('Response:', res);
-            setAccessToken(res.data.accessToken)
-            setRefreshToken(res.data.refreshToken)
-            setExpiresIn(res.data.expiresIn)
-            window.history.pushState({}, null, "/")
-          })
-          .catch((error) => {
-            console.error('Login request failed:', error.response);
-          })
+        fetch('http://localhost:3002/login', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ code }),
+        })
+        .then((response) => {
+        console.log('Response:', response);
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        return response.json();
+      })
+      .then((data) => {
+        setAccessToken(data.accessToken);
+        setRefreshToken(data.refreshToken);
+        setExpiresIn(data.expiresIn);
+        window.history.pushState({}, null, '/');
+      })
+      .catch((error) => {
+        console.error('Login request failed:', error);
+      });
       }, [code])
     
 
     useEffect(() => {
         if (!refreshToken || !expiresIn) return
         const interval = setInterval(() => {
-            axios
-            .post('http://localhost:3002/refresh', {
-                refreshToken,
+            fetch('http://localhost:3002/refresh', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ refreshToken }),
+      })
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+          }
+          return response.json();
         })
-        .then(res => {
-            setAccessToken(res.data.accessToken)
-            setExpiresIn(res.data.expiresIn)
+        .then((data) => {
+          setAccessToken(data.accessToken);
+          setExpiresIn(data.expiresIn);
         })
-        .catch((error)=> {
-            console.error('Refresh request failed:', error.response);
-            // window.location = "/"
-        })
-        }, (expiresIn -60) *1000)
-        
-        return () => clearInterval(interval)
-    }, [refreshToken, expiresIn])
+        .catch((error) => {
+          console.error('Refresh request failed:', error);
+          // window.location = "/"
+        });
+    }, (expiresIn - 60) * 1000);
+        return () => clearInterval(interval);
+    }, [refreshToken, expiresIn]);
 
     return accessToken
-}
+    }
