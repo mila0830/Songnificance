@@ -1,0 +1,36 @@
+/* Home.css */
+.home {
+    display: flex;
+    align-items: center; /* Center vertically */
+    justify-content: center; /* Center horizontally */
+    height: 100vh;
+}
+  
+.col-lg-7 {
+    text-align: center; /* Center the content horizontally */
+}
+  
+button {
+    font-size: 0.7em; /* Increase font size */
+    padding: 10px 10px; /* Add padding */
+    text-align: center;
+    background-color: #e7e7e7;
+    color: black;
+    
+}
+
+.title{
+    text-align: center;
+    font-size: 4em;
+    font-family: Georgia, serif;
+    color: black;
+}
+body {
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(to right, rgb(220, 132, 220), rgb(103, 222, 103),rgb(240, 231, 98));
+  }
