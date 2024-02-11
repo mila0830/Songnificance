@@ -1,4 +1,6 @@
 /* Home.css */
+
+
 .home {
     display: flex;
     align-items: center; /* Center vertically */
@@ -9,21 +11,49 @@
 .col-lg-7 {
     text-align: center; /* Center the content horizontally */
 }
-  
-button {
-    font-size: 0.7em; /* Increase font size */
-    padding: 10px 10px; /* Add padding */
+
+.button {
+    font-size: 1em;
+    font: 'Roboto';
+    padding: 10px; /* Add padding */
     text-align: center;
     background-color: #e7e7e7;
     color: black;
+    transition: background-color 0.3s ease;
     
+    
+}
+.button:hover {
+    background-color: grey;
 }
 
 .title{
-    text-align: center;
+    /* text-align: center;
     font-size: 4em;
     font-family: Georgia, serif;
-    color: black;
+    color: black; */
+    font-size: 5em;
+    color: black; /* Choose a futuristic color */
+    text-align: center;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    font-family: 'Roboto', sans-serif; /* Use a modern and sleek font */
+    margin-bottom: 20px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); /* Add a subtle text shadow for depth */
+    margin-top: -10px
+}
+.title-two{
+    font-size: 4.5em;
+    color: black; /* Choose a futuristic color */
+    text-align: center;
+   
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    font-family: 'Roboto', sans-serif; /* Use a modern and sleek font */
+    font-style:italic;
+    margin-bottom: 20px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6); /* Add a subtle text shadow for depth */
+    margin-top: -15px
 }
 body {
     margin: 0;
@@ -32,5 +62,49 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    background: linear-gradient(to right, rgb(220, 132, 220), rgb(103, 222, 103),rgb(240, 231, 98));
-  }
+    background: linear-gradient(to right, white,rgb(133, 51, 210));
+}
+.body-text{
+    display: inline-block; /* Ensures that the background and border apply to the text */
+    padding: 10px; /* Add padding to create space between text and border */
+    border-radius: 10px; /* Adjust the radius to control the roundness of corners */
+    background: rgba(255, 255, 255, 0.2);
+    text-align: center;
+    font-size: 1.75em;
+    font-family: 'Roboto', sans-serif;
+    color: black;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4); /* Add a subtle text shadow for depth */
+    margin-top: -10px;
+    margin: 0 20px;
+    border: 3px solid rgb(190, 138, 239);
+}
+.second-header{
+    text-align: center;
+    font-size: 1em;
+    font-family: sans-serif;
+    color: black;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2); /* Add a subtle text shadow for depth */
+    margin-top: -10px;
+    margin: 5 20px;
+    
+    /* font-style: italic; */
+}
+
+.corner-text {
+    display: inline-block;
+    padding: 10px;
+    text-align: center;
+    font-size: 1.25em;
+    font-family: 'Roboto', sans-serif;
+    color: rgb(70, 69, 72);
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.4);
+    margin: 0 2.5px;
+    position: fixed;
+    top: 2.5px;
+    left: 1px;
+    
+    
+}
+
+
+

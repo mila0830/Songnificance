@@ -70,6 +70,7 @@ function Home() {
         !responseSong&& 
         <>
         <h1 className="title">Songnificance</h1>
+        <h2 className="second-header">Uncover the story behind your favorite song with just one click!</h2>
         <div className="row align-items-center my-5">
           <div className="col-lg-7">
             <input
@@ -83,6 +84,7 @@ function Home() {
               placeholder="Enter artist name"
               value={artistTerm}
               onChange={(e) => setArtistTerm(e.target.value)}
+              
             />
             <button onClick={handleSearch}>Search</button>
         
@@ -96,11 +98,9 @@ function Home() {
             responseSong&&
             <>
             <div>
-            <h2>Results Page</h2>
-            <p>Song: {responseSong}</p>
-            <p>Artist: {responseArtist}</p>
-            <p>Summary: {responseSummary}</p>
-            
+            <h1 className="title-two">The Meaning</h1>
+            <h2 className="body-text">{responseSummary}</h2>
+            <h2 className="corner-text"> SONGNIFICANCE </h2>
             </div>
             </>
         }
