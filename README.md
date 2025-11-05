@@ -1,6 +1,7 @@
 # Songnificance
 
 ### Project made for McWics Hackathon 2024
+https://devpost.com/software/songnification
 
 ## Inspiration
 Our project delves into a fascinating aspect of music culture: the widespread enjoyment of songs irrespective of language barriers. We're exploring how people groove to tunes, often unaware of the deep lyrical meanings, particularly in foreign languages, especially with McGill being such a diverse community. It's intriguing how these seemingly happy melodies or remixes conceal profound messages, and we're here to unravel those hidden depths.
